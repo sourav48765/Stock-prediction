@@ -15,8 +15,8 @@ from tensorflow.keras.layers import LSTM
 import tensorflow as tf
 from numpy import array
 
-
-stock, start_date, end_date = input("Enter stock name, start date and end date in YYYY-MM-DD format: ").split(",")
+# format of data you have to give for reference  -->  TATASTEEL, 2023-01-01, 2024-03-25
+stock, start_date, end_date = map(str.strip, input("Enter stock name, start date and end date in YYYY-MM-DD format: ").split(","))
 start_date, end_date = map(datetime.date.fromisoformat, (start_date, end_date))
 ticket = stock+".NS"
 print(start_date,end_date,ticket)
@@ -88,7 +88,7 @@ plt.plot(testPredictPlot)
 plt.show()
 
 
-x_input=test_data[111:].reshape(1,-1)
+x_input=test_data[len(test_data)-time_step:].reshape(1,-1)
 
 temp_input=list(x_input)
 temp_input=temp_input[0].tolist()
@@ -128,7 +128,7 @@ while(i<30):
 day_new = np.arange(1, 6)
 day_pred = np.arange(6, 36)
 
-plt.plot(day_new,scaler.inverse_transform(df1[326:]))
+plt.plot(day_new, scaler.inverse_transform(df1[len(df1)-time_step:]))
 plt.plot(day_pred,scaler.inverse_transform(lst_output))
 plt.show()
 df3=df1.tolist()
